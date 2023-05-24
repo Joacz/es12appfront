@@ -1,0 +1,1 @@
+export { default as Publication, type IPublication } from './Publication';

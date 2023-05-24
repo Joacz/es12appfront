@@ -1,0 +1,16 @@
+.menuIconNavbar:hover {
+  cursor: pointer;
+  background: #3c5aa2;
+}
+
+.menuIconNavbar {
+  transition: .1s ease-in-out;
+}
+
+.navbarLink {
+  transition: .2s ease;
+}
+
+.navbarLink:hover {
+  filter: drop-shadow(0 0 1em #fff);
+}
