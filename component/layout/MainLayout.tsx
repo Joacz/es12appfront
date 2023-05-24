@@ -53,6 +53,10 @@ export const MainLayout: FC<MainLayoutProps> = ({
   return (
     <>
       <Head>
+        <meta
+          http-equiv='Content-Security-Policy'
+          content='upgrade-insecure-requests'
+        />
         <title>{title}</title>
         <meta name='description' content={description}></meta>
         <meta charSet='UTF-8'></meta>
