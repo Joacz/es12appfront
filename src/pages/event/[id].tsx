@@ -1,4 +1,3 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { eventApi } from '../../../apis';
 import IEvent from '../../../interfaces/IEvents';
 import { MainLayout } from '../../../component/layout';
@@ -6,6 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUrlify } from '../../../hooks';
+import { NextPage } from 'next';
 
 const EventById: NextPage = () => {
   const router = useRouter();

@@ -1,15 +1,6 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { MainLayout } from '../../../component/layout';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from '@mui/material';
-import { eventApi } from '../../../apis';
+import { Grid, Typography } from '@mui/material';
 import { EventCardContainer } from '../../../component/ui';
 import { EventsContext } from '../../../context/events';
 
