@@ -34,7 +34,7 @@ export const EventCard: FC<EventCardProps> = ({
             borderRadius: 10,
             objectFit: 'cover',
           }}
-          src={`api/image/${portrait}`}
+          src={`/api/image/${portrait}`}
           className='w-full border-white border-2 rounded-sm'
           alt=''
         />

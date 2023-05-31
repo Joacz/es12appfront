@@ -1,6 +1,6 @@
-import '@/styles/globals.css';
-import '../../src/styles/ui/Navbar.css';
-import '../../src/styles/ui/Header.css';
+import '../styles/globals.css';
+import '../styles/ui/Navbar.css';
+import '../styles/ui/Header.css';
 
 import type { AppProps } from 'next/app';
 import { PublicationsProvider } from '../../context/publications';
