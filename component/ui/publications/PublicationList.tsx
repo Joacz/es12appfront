@@ -13,9 +13,13 @@ import { Slider } from '../';
 
 interface PublicationsProps {
   publications: Publication[];
+  hasTitle?: boolean;
 }
 
-export const PublicationList: FC<PublicationsProps> = ({ publications }) => {
+export const PublicationList: FC<PublicationsProps> = ({
+  publications,
+  hasTitle,
+}) => {
   const urlify = useUrlify;
 
   return (
@@ -30,7 +34,9 @@ export const PublicationList: FC<PublicationsProps> = ({ publications }) => {
     >
       {publications.length >= 1 ? (
         <Grid item xs={12}>
-          <Typography variant={'h3'}>NOTICIAS RECIENTES</Typography>
+          {hasTitle && (
+            <Typography variant={'h3'}>PUBLICACIONES RECIENTES</Typography>
+          )}
           {publications.map((p) => (
             <List key={p.id}>
               <ListItem>
@@ -52,8 +58,8 @@ export const PublicationList: FC<PublicationsProps> = ({ publications }) => {
                   >
                     {p.title}
                   </Typography>
-                  <p>{p.date}</p>
                   <p
+                    style={{ fontSize: 20 }}
                     className='textPublication'
                     dangerouslySetInnerHTML={{
                       __html: urlify(
@@ -65,7 +71,9 @@ export const PublicationList: FC<PublicationsProps> = ({ publications }) => {
                   ></p>
                   {p.images && p.images.length >= 1 && (
                     <Slider
-                      images={p.images.filter((i) => i.type.includes('image'))}
+                      images={p.images
+                        .filter((i) => i.type.includes('image'))
+                        .map((i) => i)}
                     />
                   )}
                   <Button
@@ -87,7 +95,7 @@ export const PublicationList: FC<PublicationsProps> = ({ publications }) => {
           fontSize={20}
           fontWeight={500}
         >
-          Cargando...
+          No hay publicaciones
         </Typography>
       )}
     </Grid>

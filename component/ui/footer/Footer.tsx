@@ -33,21 +33,13 @@ export const Footer: FC = ({}) => {
           color: '#fff',
         }}
       >
-        {/* <Typography
-          variant='body1'
-          textAlign={'right'}
-          fontSize={18}
-          fontWeight={400}
-        >
-          Rectora: RUTILI, Rosana Irene Guadalupe.
-        </Typography> */}
         <Typography
           variant='body1'
           textAlign={'right'}
           fontSize={windowSize?.x && windowSize?.x <= 500 ? 14 : 19}
           fontWeight={400}
         >
-          © 2023 | Todos los derechos reservados
+          Copyright: Ricardo Premet © 2023 | Todos los derechos reservados
         </Typography>
         <Link
           href={'https://escuela12neuquen.edu.ar/admin'}

@@ -21,27 +21,32 @@ export const MainLayout: FC<MainLayoutProps> = ({
   const links = [
     {
       url: 'https://escuela12neuquen.edu.ar/',
+      target: undefined,
       value: 'inicio',
     },
     {
-      url: 'https://escuela12neuquen.edu.ar/event',
-      value: 'eventos',
-    },
-    {
-      url: 'https://escuela12neuquen.edu.ar/publication',
-      value: 'noticias',
-    },
-    {
       url: 'https://escuela12neuquen.edu.ar/alumnos',
+      target: undefined,
       value: 'alumnos',
     },
     {
-      url: 'https://escuela12neuquen.edu.ar/#docentes',
+      url: 'https://escuela12neuquen.edu.ar/docentes',
+      target: undefined,
       value: 'docentes',
     },
-
+    {
+      url: 'https://escuela12neuquen.edu.ar/publication',
+      target: undefined,
+      value: 'publicaciones',
+    },
+    {
+      url: 'https://escuela12neuquen.edu.ar/event',
+      target: undefined,
+      value: 'eventos',
+    },
     {
       url: 'https://escuela12neuquen.edu.ar/sobre-nosotros',
+      target: undefined,
       value: 'acerca',
     },
   ];
@@ -67,7 +72,7 @@ export const MainLayout: FC<MainLayoutProps> = ({
         <title>{title}</title>
         <meta name='description' content={description}></meta>
         <meta charSet='UTF-8'></meta>
-        <link rel='icon' href='favicon.ico' />
+        <link rel='icon' href='/favicon.ico' />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0'

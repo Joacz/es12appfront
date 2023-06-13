@@ -68,7 +68,11 @@ const EventById: NextPage = () => {
               {event?.title}
             </Typography>
             <p
-              style={{ wordBreak: 'break-word', textAlign: 'justify' }}
+              style={{
+                wordBreak: 'break-word',
+                textAlign: 'justify',
+                fontSize: 20,
+              }}
               dangerouslySetInnerHTML={{
                 __html: urlify(event?.content || ''),
               }}

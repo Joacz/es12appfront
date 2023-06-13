@@ -4,11 +4,14 @@ import Link from 'next/link';
 import { FC, useState } from 'react';
 import { useWindowSize, useVerticalScroll } from '../../hooks';
 import MenuIcon from '@mui/icons-material/Menu';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import { Facebook, Instagram } from '@mui/icons-material';
 
 export interface NavProps {
   links: Array<{
     url: string;
     value: string;
+    target: string | undefined;
   }>;
 }
 
@@ -100,6 +103,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                         <Link
                           style={{ padding: '10px 5px' }}
                           href={link.url}
+                          target={link.target || '_self'}
                           className='navbarLink'
                         >
                           <Typography color='#fff' variant='body1'>
@@ -108,6 +112,72 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                         </Link>
                       </ListItem>
                     ))}
+                    <br />
+                    <List
+                      sx={{
+                        display: 'flex',
+                        gap: 2,
+                        flexDirection: 'column',
+                        width: '100%',
+                      }}
+                    >
+                      <ListItem
+                        sx={{
+                          p: 0,
+                        }}
+                      >
+                        <Link
+                          href={
+                            'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
+                          }
+                          style={{ color: '#fff', display: 'flex' }}
+                        >
+                          <YouTubeIcon
+                            sx={{ color: '#fff' }}
+                            fontSize={'medium'}
+                          />
+                          <Typography variant='body1'>
+                            Canal de Youtube
+                          </Typography>
+                        </Link>
+                      </ListItem>
+                      <ListItem
+                        sx={{
+                          p: 0,
+                        }}
+                      >
+                        <Link
+                          href={
+                            'https://www.facebook.com/pages/Escuela-Secundaria-N-12-Provincia-Del-Neuquen/819865701488724'
+                          }
+                          style={{ color: '#fff', display: 'flex' }}
+                        >
+                          <Facebook
+                            sx={{ color: '#fff' }}
+                            fontSize={'medium'}
+                          />
+                          <Typography variant='body1'>Facebook</Typography>
+                        </Link>
+                      </ListItem>
+                      <ListItem
+                        sx={{
+                          p: 0,
+                        }}
+                      >
+                        <Link
+                          href={
+                            'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
+                          }
+                          style={{ color: '#fff', display: 'flex' }}
+                        >
+                          <Instagram
+                            sx={{ color: '#fff' }}
+                            fontSize={'medium'}
+                          />
+                          <Typography variant='body1'>Instagram</Typography>
+                        </Link>
+                      </ListItem>
+                    </List>
                   </>
                 )}
               </List>
@@ -129,10 +199,48 @@ export const Navbar: FC<NavProps> = ({ links }) => {
               </Link>
             </Grid>
             <Grid item>
+              <List sx={{ display: 'flex' }}>
+                <ListItem
+                  sx={{ p: 0, display: 'flex', justifyContent: 'end', gap: 5 }}
+                >
+                  <Link
+                    href={
+                      'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
+                    }
+                    style={{ color: '#fff', display: 'flex' }}
+                  >
+                    <YouTubeIcon sx={{ color: '#fff' }} fontSize={'medium'} />
+                    <Typography variant='body1'>Canal de Youtube</Typography>
+                  </Link>
+                  <Link
+                    href={
+                      'https://www.facebook.com/pages/Escuela-Secundaria-N-12-Provincia-Del-Neuquen/819865701488724'
+                    }
+                    style={{ color: '#fff', display: 'flex' }}
+                  >
+                    <Facebook sx={{ color: '#fff' }} fontSize={'medium'} />
+                    <Typography variant='body1'>Facebook</Typography>
+                  </Link>
+                  <Link
+                    href={
+                      'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
+                    }
+                    style={{ color: '#fff', display: 'flex' }}
+                  >
+                    <Instagram sx={{ color: '#fff' }} fontSize={'medium'} />
+                    <Typography variant='body1'>Instagram</Typography>
+                  </Link>
+                </ListItem>
+              </List>
+
               <List sx={{ display: 'flex', flexDirection: 'row', padding: 0 }}>
                 {links.map((link) => (
                   <ListItem key={link.value}>
-                    <Link href={link.url} className='navbarLink'>
+                    <Link
+                      href={link.url}
+                      target={link.target || '_self'}
+                      className='navbarLink'
+                    >
                       <Typography color='#fff' variant='h6'>
                         {link.value.toUpperCase()}
                       </Typography>

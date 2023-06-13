@@ -56,7 +56,7 @@ export const Slider: FC<SliderProps> = ({ images }) => {
         src={`/api/image/${images[index]?.name}`}
         style={{
           width: '100%',
-          height: '100%',
+          height: '500px',
           objectFit: 'contain',
         }}
       />

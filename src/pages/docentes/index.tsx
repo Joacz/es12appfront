@@ -1,9 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { MainLayout } from '../../../component/layout';
-import { PublicationList } from '../../../component/ui';
+import { Divisor, PublicationList } from '../../../component/ui';
 import { PublicationsContext } from '../../../context/publications';
 import {
   Button,
+  Container,
   Grid,
   IconButton,
   Paper,
@@ -16,20 +17,20 @@ import {
   Typography,
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
-import Link from 'next/link';
+import { FileDisplay } from '../../../component/ui/FileDisplay';
 
 export default function Index() {
   const { findAllBySection, publications } = useContext(PublicationsContext);
 
   useEffect(() => {
-    findAllBySection('ALUMNOS');
+    findAllBySection('DOCENTES');
   }, [publications]);
 
   return (
     <MainLayout
-      title={'Alumnos - ES12'}
-      description={'Información y noticias de los alumnos de la ES12'}
-      headerTitle='Alumnos'
+      title={'Docentes - ES12'}
+      description={'Información y noticias de los docentes de la ES12'}
+      headerTitle='Docentes'
     >
       <PublicationList hasTitle={false} publications={publications} />
       <Grid
@@ -49,46 +50,102 @@ export default function Index() {
           md={8}
           lg={6}
         >
-          <Typography variant='h2'>TURNOS</Typography>
-
-          <Link
-            style={{ width: '100%' }}
+          <Typography variant='h2'>CARPETAS</Typography>
+          <Button
+            size='large'
+            fullWidth
+            variant='outlined'
+            href='https://drive.google.com/drive/folders/13urUwx6jhiUtWVt3miiLVzY0_8JRpydF'
             target='_blank'
-            href={
-              'https://drive.google.com/drive/u/0/folders/1Jb5avqPpdYb5XD-zyAI8wBFDJGwdmgFf'
-            }
           >
-            <Button variant='outlined' size='large' fullWidth>
-              Turno Mañana
-            </Button>
-          </Link>
-          <Link
-            style={{ width: '100%' }}
+            Docentes
+          </Button>
+          <Button
+            size='large'
+            fullWidth
+            variant='outlined'
+            href='https://drive.google.com/drive/folders/1wlwlb51sbruNQ07PU4mx8bwsJfCEENSD'
             target='_blank'
-            href={
-              'https://drive.google.com/drive/u/0/folders/1nuUnYJCl1kEGqe6tT6Px-OJeohxAoiic'
-            }
           >
-            <Button variant='outlined' size='large' fullWidth>
-              Turno Tarde
-            </Button>
-          </Link>
-          <Link
-            style={{ width: '100%' }}
+            Institucional
+          </Button>
+          <Button
+            size='large'
+            fullWidth
+            variant='outlined'
+            href='https://drive.google.com/drive/folders/1qXafH25CeIoHrVKcrGSjotq2f6SvoqvM'
             target='_blank'
-            href={
-              'https://drive.google.com/drive/u/0/folders/1d1oOJ8IFXm2feTPc0BfnAXpzPDO4jIBT'
-            }
           >
-            <Button variant='outlined' size='large' fullWidth>
-              Turno Noche
-            </Button>
-          </Link>
+            Programas y Planificaciones
+          </Button>
         </Grid>
+      </Grid>
+
+      <Grid
+        padding={3}
+        container
+        alignItems={'center'}
+        marginBottom={5}
+        justifyContent={'center'}
+      >
+        <Container
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 2,
+            p: '10em 0',
+          }}
+        >
+          <Typography
+            variant='h3'
+            fontSize={40}
+            fontWeight={500}
+            align='center'
+          >
+            Documentos para descargar
+          </Typography>
+          <Divisor />
+          <Grid
+            container
+            wrap='wrap'
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <Grid item lg={4} sx={{ padding: 1 }}>
+              <FileDisplay
+                value={'Formulario Único'}
+                image={'img/pdf.png'}
+                url={
+                  'https://drive.google.com/file/d/1HPp99HVPDQNHv9qhtVKFxOuZBtHcAdvj/view'
+                }
+              />
+            </Grid>
+            <Grid item lg={4} sx={{ padding: 1 }}>
+              <FileDisplay
+                value={'Planilla de Incompatibilidad - (frente)'}
+                image={'img/word.png'}
+                url={
+                  'https://drive.google.com/file/d/1HPp99HVPDQNHv9qhtVKFxOuZBtHcAdvj/view'
+                }
+              />
+            </Grid>
+            <Grid item lg={4} sx={{ padding: 1 }}>
+              <FileDisplay
+                value={'Planilla de Incompatibilidad - (dorso)'}
+                image={'img/word.png'}
+                url={
+                  'https://drive.google.com/file/d/1HPp99HVPDQNHv9qhtVKFxOuZBtHcAdvj/view'
+                }
+              />
+            </Grid>
+          </Grid>
+        </Container>
       </Grid>
       {publications.map((p) =>
         p.images.filter((i) => !i.type.includes('image'))
-      ).length > 5 ? (
+      ).length > 1 ? (
         <Grid
           padding={3}
           container

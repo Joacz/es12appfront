@@ -69,6 +69,7 @@ const PublicationById: NextPage = () => {
                 />
               </Link>
             </Grid>
+            <p>{publications[0]?.date}</p>
             <Typography
               variant='h1'
               fontWeight={800}
@@ -81,7 +82,11 @@ const PublicationById: NextPage = () => {
               {publications[0]?.title}
             </Typography>
             <p
-              style={{ wordBreak: 'break-word', textAlign: 'justify' }}
+              style={{
+                fontSize: 20,
+                wordBreak: 'break-word',
+                textAlign: 'justify',
+              }}
               dangerouslySetInnerHTML={{
                 __html: urlify(publications[0]?.content || ''),
               }}
@@ -126,8 +131,9 @@ const PublicationById: NextPage = () => {
                   alignItems={'center'}
                   marginBottom={8}
                   justifyContent={'center'}
+                  width={'100%'}
                 >
-                  <Grid item xs={12} md={8} lg={6}>
+                  <Grid item xs={12} md={8}>
                     <Typography variant='h2'>Archivos</Typography>
                     <br />
                     <TableContainer component={Paper}>
