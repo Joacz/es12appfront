@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { MainLayout } from '../../../component/layout';
 import {
   Button,
+  Container,
   Grid,
   IconButton,
   Paper,
@@ -118,65 +119,63 @@ const PublicationById: NextPage = () => {
                     );
                   })}
             </Grid>
-
-            {/* Archivos */}
-
-            {publications[0]?.images &&
-              publications[0]?.images?.filter(
-                (image) => !image.type.includes('image')
-              ).length > 0 && (
-                <Grid
-                  padding={3}
-                  container
-                  alignItems={'center'}
-                  marginBottom={5}
-                  justifyContent={'center'}
-                >
-                  <Grid item xs={12} sm={10}>
-                    <Typography variant='h2'>DESCARGAS</Typography>
-                    <br />
-                    <TableContainer component={Paper}>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell align='left'>Nombre</TableCell>
-                            <TableCell align='left'>Formato</TableCell>
-                            <TableCell align='center'>Acciones</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {publications?.map((p) =>
-                            p?.images?.map((image, key) => (
-                              <TableRow
-                                hover={true}
-                                key={key}
-                                sx={{
-                                  '&:last-child td, &:last-child th': {
-                                    border: 0,
-                                  },
-                                }}
-                              >
-                                <TableCell>
-                                  {image.name.substring(15, image.name.length)}
-                                </TableCell>
-                                <TableCell align='left'>{image.type}</TableCell>
-                                <TableCell align='center'>
-                                  <IconButton
-                                    href={`/api/image/download/${image.name}`}
-                                  >
-                                    <Download />
-                                  </IconButton>
-                                </TableCell>
-                              </TableRow>
-                            ))
-                          )}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </Grid>
-                </Grid>
-              )}
           </Grid>
+
+          {/* Archivos */}
+
+          {publications[0]?.images &&
+            publications[0]?.images?.filter(
+              (image) => !image.type.includes('image')
+            ).length > 0 && (
+              <Container sx={{ width: '100%' }}>
+                <Typography variant='h2'>DESCARGAS</Typography>
+                <br />
+                <TableContainer component={Paper}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align='left'>Nombre</TableCell>
+                        <TableCell align='left'>Formato</TableCell>
+                        <TableCell align='center'>Acciones</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {publications?.map((p) =>
+                        p?.images?.map((image, key) => (
+                          <TableRow
+                            hover={true}
+                            key={key}
+                            sx={{
+                              '&:last-child td, &:last-child th': {
+                                border: 0,
+                              },
+                            }}
+                          >
+                            <TableCell>
+                              {image.name.substring(16, image.name.length)}
+                            </TableCell>
+                            <TableCell align='left'>
+                              {image.type.includes('pdf')
+                                ? 'pdf'
+                                : (image.type.includes('wordprocessingml') &&
+                                    'word') ||
+                                  'otro'}
+                            </TableCell>
+                            <TableCell align='center'>
+                              <IconButton
+                                href={`/api/image/download/${image.name}`}
+                              >
+                                <Download />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Container>
+            )}
         </Grid>
       </Grid>
     </MainLayout>

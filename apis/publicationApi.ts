@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const publicationApi = axios.create({
-  baseURL: "/api/publication",
+  baseURL: "https://escuela12neuquen.edu.ar/api/publication",
 });
