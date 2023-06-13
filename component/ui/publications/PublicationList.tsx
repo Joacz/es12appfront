@@ -69,13 +69,15 @@ export const PublicationList: FC<PublicationsProps> = ({
                       ),
                     }}
                   ></p>
-                  {p.images && p.images.length >= 1 && (
-                    <Slider
-                      images={p.images
-                        .filter((i) => i.type.includes('image'))
-                        .map((i) => i)}
-                    />
-                  )}
+                  {p.images &&
+                    p.images.filter((i) => i.type.includes('image')).length >=
+                      1 && (
+                      <Slider
+                        images={p.images
+                          .filter((i) => i.type.includes('image'))
+                          .map((i) => i)}
+                      />
+                    )}
                   <Button
                     sx={{ width: 'max-content', px: 5 }}
                     variant={'outlined'}

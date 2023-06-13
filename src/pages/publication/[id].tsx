@@ -126,15 +126,14 @@ const PublicationById: NextPage = () => {
                 (image) => !image.type.includes('image')
               ).length > 0 && (
                 <Grid
-                  padding={1}
+                  padding={3}
                   container
                   alignItems={'center'}
-                  marginBottom={8}
+                  marginBottom={5}
                   justifyContent={'center'}
-                  width={'100%'}
                 >
-                  <Grid item xs={12} md={8}>
-                    <Typography variant='h2'>Archivos</Typography>
+                  <Grid item xs={12} sm={10}>
+                    <Typography variant='h2'>DESCARGAS</Typography>
                     <br />
                     <TableContainer component={Paper}>
                       <Table>
@@ -146,37 +145,30 @@ const PublicationById: NextPage = () => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {publications.map((p) =>
-                            p.images
-                              ?.filter((image) => !image.type.includes('image'))
-                              .map((image, key) => (
-                                <TableRow
-                                  hover={true}
-                                  key={key}
-                                  sx={{
-                                    '&:last-child td, &:last-child th': {
-                                      border: 0,
-                                    },
-                                  }}
-                                >
-                                  <TableCell>
-                                    {image.name.substring(
-                                      15,
-                                      image.name.length
-                                    )}
-                                  </TableCell>
-                                  <TableCell align='left'>
-                                    {image.type}
-                                  </TableCell>
-                                  <TableCell align='center'>
-                                    <IconButton
-                                      href={`/api/image/download/${image.name}`}
-                                    >
-                                      <Download />
-                                    </IconButton>
-                                  </TableCell>
-                                </TableRow>
-                              ))
+                          {publications?.map((p) =>
+                            p?.images?.map((image, key) => (
+                              <TableRow
+                                hover={true}
+                                key={key}
+                                sx={{
+                                  '&:last-child td, &:last-child th': {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell>
+                                  {image.name.substring(15, image.name.length)}
+                                </TableCell>
+                                <TableCell align='left'>{image.type}</TableCell>
+                                <TableCell align='center'>
+                                  <IconButton
+                                    href={`/api/image/download/${image.name}`}
+                                  >
+                                    <Download />
+                                  </IconButton>
+                                </TableCell>
+                              </TableRow>
+                            ))
                           )}
                         </TableBody>
                       </Table>
