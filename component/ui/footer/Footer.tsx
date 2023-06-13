@@ -50,7 +50,7 @@ export const Footer: FC = ({}) => {
           © 2023 | Todos los derechos reservados
         </Typography>
         <Link
-          href={'https://www.escuela12neuquen.edu.ar/v1/admin'}
+          href={'https://escuela12neuquen.edu.ar/admin'}
           className='linkFooter'
         >
           <Typography

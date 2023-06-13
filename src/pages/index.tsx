@@ -29,14 +29,10 @@ type Props = {
 };
 
 export default function Home() {
-  const [publications, setPublications] = useState<any[]>([]);
+  const { publications, findAllBySection } = useContext(PublicationsContext);
 
   useEffect(() => {
-    if (publications.length <= 0) {
-      publicationApi.get('/recent').then((res) => setPublications(res.data));
-    } else {
-      return;
-    }
+    findAllBySection('PRINCIPAL');
   }, [publications]);
 
   return (

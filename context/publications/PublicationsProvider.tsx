@@ -24,8 +24,15 @@ export const PublicationsProvider: FunctionComponent<PublicationsProps> = ({
   );
 
   const findAll = async () => {
-    const publications = await publicationApi.get<Publication[]>('');
+    const publications = await publicationApi.get<Publication[]>('/recent');
     dispatch({ type: 'Find All', payload: publications.data });
+  };
+
+  const findAllBySection = async (section: string) => {
+    const publications = await publicationApi.get<Publication[]>(`/recent`, {
+      params: section,
+    });
+    dispatch({ type: 'Find By Section', payload: publications.data });
   };
 
   const findById = async (id: any) => {
@@ -39,7 +46,9 @@ export const PublicationsProvider: FunctionComponent<PublicationsProps> = ({
   }, []);
 
   return (
-    <PublicationsContext.Provider value={{ ...state, findAll, findById }}>
+    <PublicationsContext.Provider
+      value={{ ...state, findAll, findById, findAllBySection }}
+    >
       {children}
     </PublicationsContext.Provider>
   );

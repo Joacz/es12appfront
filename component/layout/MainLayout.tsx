@@ -8,6 +8,7 @@ interface MainLayoutProps {
   headerTitle?: string;
   description: string;
   children: any;
+  includeHeader?: boolean;
 }
 
 export const MainLayout: FC<MainLayoutProps> = ({
@@ -15,26 +16,32 @@ export const MainLayout: FC<MainLayoutProps> = ({
   title,
   children,
   headerTitle,
+  includeHeader,
 }) => {
   const links = [
     {
-      url: 'https://www.escuela12neuquen.edu.ar/',
+      url: 'https://escuela12neuquen.edu.ar/',
       value: 'inicio',
     },
     {
-      url: 'https://www.escuela12neuquen.edu.ar/event',
+      url: 'https://escuela12neuquen.edu.ar/event',
       value: 'eventos',
     },
     {
-      url: 'https://www.escuela12neuquen.edu.ar/publication',
+      url: 'https://escuela12neuquen.edu.ar/publication',
       value: 'noticias',
     },
     {
-      url: 'https://www.escuela12neuquen.edu.ar/#docentes',
-      value: 'docentes',
+      url: 'https://escuela12neuquen.edu.ar/alumnos',
+      value: 'alumnos',
     },
     {
-      url: 'https://www.escuela12neuquen.edu.ar/sobre-nosotros',
+      url: 'https://escuela12neuquen.edu.ar/#docentes',
+      value: 'docentes',
+    },
+
+    {
+      url: 'https://escuela12neuquen.edu.ar/sobre-nosotros',
       value: 'acerca',
     },
   ];
@@ -60,6 +67,7 @@ export const MainLayout: FC<MainLayoutProps> = ({
         <title>{title}</title>
         <meta name='description' content={description}></meta>
         <meta charSet='UTF-8'></meta>
+        <link rel='icon' href='favicon.ico' />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0'
@@ -68,11 +76,15 @@ export const MainLayout: FC<MainLayoutProps> = ({
       <main className='mainLayout'>
         <Navbar links={links} />
         <div style={{ height: '90px' }}></div>
-        <Header
-          title={headerTitle || 'PROVINCIA DEL NEUQUÉN'}
-          subInfo={subInfo}
-          upperSubTitle={'ESCUELA SECUNDARIA Nº12'}
-        />
+        {includeHeader === true || includeHeader === undefined ? (
+          <Header
+            title={headerTitle || 'PROVINCIA DEL NEUQUÉN'}
+            subInfo={subInfo}
+            upperSubTitle={'ESCUELA SECUNDARIA Nº12'}
+          />
+        ) : (
+          <></>
+        )}
         {children}
       </main>
       <Footer />

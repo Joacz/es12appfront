@@ -28,7 +28,7 @@ export const Slider: FC<SliderProps> = ({ images }) => {
         position: 'relative',
       }}
     >
-      {images.indexOf(images[index]) !== 0 && (
+      {images.length >= 1 && images.indexOf(images[index]) !== 0 && (
         <ArrowBackIos
           onClick={() => sustractIndex()}
           style={{
@@ -53,37 +53,38 @@ export const Slider: FC<SliderProps> = ({ images }) => {
         />
       )}
       <img
-        src={`/api/image/${images[index].name}`}
+        src={`/api/image/${images[index]?.name}`}
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'contain',
         }}
       />
-      {images.indexOf(images[index]) !== images.length - 1 && (
-        <ArrowForwardIos
-          onClick={() => addIndex()}
-          style={{
-            borderLeft: '1px solid #fff',
-            borderTop: '1px solid #fff',
-            borderBottom: '1px solid #fff',
-            transition: 'all .5s ease',
-            position: 'absolute',
-            zIndex: 10,
-            color: '#fff',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            backdropFilter: 'blur(8px)',
-            width: 40,
-            height: 70,
-            background: '#000000bb',
-            cursor: 'pointer',
-            right: 0,
-            borderRadius: '5px 0 0 5px',
-            padding: 5,
-          }}
-        />
-      )}
+      {images.length >= 1 &&
+        images.indexOf(images[index]) !== images.length - 1 && (
+          <ArrowForwardIos
+            onClick={() => addIndex()}
+            style={{
+              borderLeft: '1px solid #fff',
+              borderTop: '1px solid #fff',
+              borderBottom: '1px solid #fff',
+              transition: 'all .5s ease',
+              position: 'absolute',
+              zIndex: 10,
+              color: '#fff',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              backdropFilter: 'blur(8px)',
+              width: 40,
+              height: 70,
+              background: '#000000bb',
+              cursor: 'pointer',
+              right: 0,
+              borderRadius: '5px 0 0 5px',
+              padding: 5,
+            }}
+          />
+        )}
     </div>
   );
 };

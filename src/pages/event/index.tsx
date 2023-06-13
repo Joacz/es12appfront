@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect, useState } from 'react';
 import { MainLayout } from '../../../component/layout';
 import { Grid, Typography } from '@mui/material';
-import { EventCardContainer } from '../../../component/ui';
+import { EventCard, EventCardContainer } from '../../../component/ui';
 import { EventsContext } from '../../../context/events';
 
 const Event: FC = () => {
@@ -24,7 +24,15 @@ const Event: FC = () => {
         justifyContent={'center'}
         alignItems={'center'}
       >
-        <EventCardContainer events={events} />
+        {events.map((event) => (
+          <EventCard
+            id={event.id}
+            content={event.content}
+            title={event.title}
+            subtitle={event.subtitle}
+            portrait={event?.images[0]?.name || 'es12.png'}
+          ></EventCard>
+        ))}
       </Grid>
     </MainLayout>
   );

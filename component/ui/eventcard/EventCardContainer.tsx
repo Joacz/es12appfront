@@ -20,11 +20,10 @@ export const EventCardContainer: FC<{ events: any }> = ({ events }) => {
                   ''
                 ) : (
                   <EventCard
-                    md={events.length === 1 ? 12 : events.length === 2 ? 6 : 4}
                     title={e.title}
                     subtitle={e.subtitle}
                     content={e.content}
-                    portrait={e.images[0].name}
+                    portrait={e.images[0]?.name || 'es12.png'}
                   />
                 )}
               </>
