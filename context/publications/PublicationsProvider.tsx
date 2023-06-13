@@ -30,7 +30,7 @@ export const PublicationsProvider: FunctionComponent<PublicationsProps> = ({
 
   const findAllBySection = async (section: string) => {
     const publications = await publicationApi.get<Publication[]>(`/recent`, {
-      params: { section },
+      params: { section: section },
     });
     dispatch({ type: 'Find By Section', payload: publications.data });
   };
