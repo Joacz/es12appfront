@@ -18,6 +18,11 @@ export const publicationsReducer = (state: PublicationsState, action: Publicatio
         ...state,
         publications: [action.payload]
       };
+    case 'Find By Section':
+      return {
+        ...state,
+        publications: [...action.payload]
+      };
     default:
       return state;
   }
