@@ -34,11 +34,11 @@ export const MainLayout: FC<MainLayoutProps> = ({
       target: undefined,
       value: 'docentes',
     },
-    {
-      url: 'https://escuela12neuquen.edu.ar/publication',
-      target: undefined,
-      value: 'publicaciones',
-    },
+    // {
+    //   url: 'https://escuela12neuquen.edu.ar/publication',
+    //   target: undefined,
+    //   value: 'noticias',
+    // },
     {
       url: 'https://escuela12neuquen.edu.ar/event',
       target: undefined,
@@ -72,7 +72,7 @@ export const MainLayout: FC<MainLayoutProps> = ({
         <title>{title}</title>
         <meta name='description' content={description}></meta>
         <meta charSet='UTF-8'></meta>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel='icon' href='/public/favicon.ico' />
         <meta
           name='viewport'
           content='width=device-width, initial-scale=1.0'
@@ -90,7 +90,7 @@ export const MainLayout: FC<MainLayoutProps> = ({
         ) : (
           <></>
         )}
-        {children}
+        <div className='childrenContainer'>{children}</div>
       </main>
       <Footer />
     </>

@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const imageApi = axios.create({
-  baseURL: "/api/image",
+  baseURL: "https://escuela12neuquen.edu.ar/api/image",
 });

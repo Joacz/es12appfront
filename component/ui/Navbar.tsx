@@ -130,6 +130,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                           href={
                             'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
                           }
+                          target='_blank'
                           style={{ color: '#fff', display: 'flex' }}
                         >
                           <YouTubeIcon
@@ -150,6 +151,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                           href={
                             'https://www.facebook.com/pages/Escuela-Secundaria-N-12-Provincia-Del-Neuquen/819865701488724'
                           }
+                          target='_blank'
                           style={{ color: '#fff', display: 'flex' }}
                         >
                           <Facebook
@@ -159,7 +161,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                           <Typography variant='body1'>Facebook</Typography>
                         </Link>
                       </ListItem>
-                      <ListItem
+                      {/* <ListItem
                         sx={{
                           p: 0,
                         }}
@@ -176,7 +178,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                           />
                           <Typography variant='body1'>Instagram</Typography>
                         </Link>
-                      </ListItem>
+                      </ListItem> */}
                     </List>
                   </>
                 )}
@@ -207,6 +209,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                     href={
                       'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
                     }
+                    target='_blank'
                     style={{ color: '#fff', display: 'flex' }}
                   >
                     <YouTubeIcon sx={{ color: '#fff' }} fontSize={'medium'} />
@@ -216,12 +219,13 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                     href={
                       'https://www.facebook.com/pages/Escuela-Secundaria-N-12-Provincia-Del-Neuquen/819865701488724'
                     }
+                    target='_blank'
                     style={{ color: '#fff', display: 'flex' }}
                   >
                     <Facebook sx={{ color: '#fff' }} fontSize={'medium'} />
                     <Typography variant='body1'>Facebook</Typography>
                   </Link>
-                  <Link
+                  {/* <Link
                     href={
                       'https://www.youtube.com/channel/UCLkcjJi_2J8My5EVxzjm5RA'
                     }
@@ -229,7 +233,7 @@ export const Navbar: FC<NavProps> = ({ links }) => {
                   >
                     <Instagram sx={{ color: '#fff' }} fontSize={'medium'} />
                     <Typography variant='body1'>Instagram</Typography>
-                  </Link>
+                  </Link> */}
                 </ListItem>
               </List>
 

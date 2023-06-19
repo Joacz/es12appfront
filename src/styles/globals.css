@@ -82,7 +82,11 @@ video {
 }
 
 .mainLayout {
-  @apply flex flex-col justify-center items-center w-full
+  @apply flex flex-col justify-start items-center w-full overflow-auto
+}
+
+.childrenContainer {
+  @apply flex flex-col justify-start items-center w-full gap-12 top-0 mt-32 overflow-auto
 }
 
 h1,

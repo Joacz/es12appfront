@@ -1,12 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { MainLayout } from '../../../component/layout';
-import { Divisor, PublicationList } from '../../../component/ui';
+import { PublicationList } from '../../../component/ui';
 import { PublicationsContext } from '../../../context/publications';
 import {
-  Button,
-  Container,
   Grid,
   IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -17,12 +16,15 @@ import {
   Typography,
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
-import { FileDisplay } from '../../../component/ui/FileDisplay';
+import FolderIcon from '@mui/icons-material/Folder';
+import { FilesContext } from '../../../context/files';
 
 export default function Index() {
   const { findAllBySection, publications } = useContext(PublicationsContext);
+  const { files, findFileBySection } = useContext(FilesContext);
 
   useEffect(() => {
+    findFileBySection('DOCENTES');
     findAllBySection('DOCENTES');
   }, [publications]);
 
@@ -39,113 +41,42 @@ export default function Index() {
         alignItems={'center'}
         marginBottom={5}
         justifyContent={'center'}
+        flexDirection={'column'}
+        gap={6}
       >
-        <Grid
-          item
-          gap={4}
-          display='flex'
-          flexDirection={'column'}
-          xs={12}
-          sm={10}
-          md={8}
-          lg={6}
-        >
-          <Typography variant='h2'>CARPETAS</Typography>
-          <Button
-            size='large'
-            fullWidth
-            variant='outlined'
+        <br />
+        <Typography variant='h2'>CARPETAS</Typography>
+        <Grid item gap={4} display='flex' xs={12} sm={10} md={8} lg={6}>
+          <Link
+            fontSize={30}
             href='https://drive.google.com/drive/folders/13urUwx6jhiUtWVt3miiLVzY0_8JRpydF'
             target='_blank'
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center',
+            }}
           >
+            <FolderIcon sx={{ fontSize: 30 }} />
             Docentes
-          </Button>
-          <Button
-            size='large'
-            fullWidth
-            variant='outlined'
+          </Link>
+
+          <Link
+            fontSize={30}
             href='https://drive.google.com/drive/folders/1wlwlb51sbruNQ07PU4mx8bwsJfCEENSD'
             target='_blank'
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              alignItems: 'center',
+            }}
           >
+            <FolderIcon sx={{ fontSize: 30 }} />
             Institucional
-          </Button>
-          <Button
-            size='large'
-            fullWidth
-            variant='outlined'
-            href='https://drive.google.com/drive/folders/1qXafH25CeIoHrVKcrGSjotq2f6SvoqvM'
-            target='_blank'
-          >
-            Programas y Planificaciones
-          </Button>
+          </Link>
         </Grid>
       </Grid>
-
-      <Grid
-        padding={3}
-        container
-        alignItems={'center'}
-        marginBottom={5}
-        justifyContent={'center'}
-      >
-        <Container
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 2,
-            p: '10em 0',
-          }}
-        >
-          <Typography
-            variant='h3'
-            fontSize={40}
-            fontWeight={500}
-            align='center'
-          >
-            Documentos para descargar
-          </Typography>
-          <Divisor />
-          <Grid
-            container
-            wrap='wrap'
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
-            <Grid item lg={4} sx={{ padding: 1 }}>
-              <FileDisplay
-                value={'Formulario Único'}
-                image={'img/pdf.png'}
-                url={
-                  'https://drive.google.com/file/d/1HPp99HVPDQNHv9qhtVKFxOuZBtHcAdvj/view'
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sx={{ padding: 1 }}>
-              <FileDisplay
-                value={'Planilla de Incompatibilidad - (frente)'}
-                image={'img/word.png'}
-                url={
-                  'https://drive.google.com/file/d/1HPp99HVPDQNHv9qhtVKFxOuZBtHcAdvj/view'
-                }
-              />
-            </Grid>
-            <Grid item lg={4} sx={{ padding: 1 }}>
-              <FileDisplay
-                value={'Planilla de Incompatibilidad - (dorso)'}
-                image={'img/word.png'}
-                url={
-                  'https://drive.google.com/file/d/1HPp99HVPDQNHv9qhtVKFxOuZBtHcAdvj/view'
-                }
-              />
-            </Grid>
-          </Grid>
-        </Container>
-      </Grid>
-      {publications.map((p) =>
-        p.images.filter((i) => !i.type.includes('image'))
-      ).length > 1 ? (
+      {files.length > 0 && (
         <Grid
           padding={3}
           container
@@ -161,41 +92,33 @@ export default function Index() {
                 <TableHead>
                   <TableRow>
                     <TableCell align='left'>Nombre</TableCell>
-                    <TableCell align='left'>Formato</TableCell>
-                    <TableCell align='center'>Acciones</TableCell>
+                    <TableCell align='center'>Descargar</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {publications?.map((p) =>
-                    p?.images?.map((image, key) => (
-                      <TableRow
-                        hover={true}
-                        key={key}
-                        sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
-                        }}
-                      >
-                        <TableCell>
-                          {image.name.substring(15, image.name.length)}
-                        </TableCell>
-                        <TableCell align='left'>{image.type}</TableCell>
-                        <TableCell align='center'>
-                          <IconButton
-                            href={`/api/image/download/${image.name}`}
-                          >
-                            <Download />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
+                  {files?.map((p, key) => (
+                    <TableRow
+                      hover={true}
+                      key={key}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell>
+                        {p.name.substring(16, p.name.length)}
+                      </TableCell>
+                      <TableCell align='center'>
+                        <IconButton href={`/api/image/download/${p.name}`}>
+                          <Download />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
           </Grid>
         </Grid>
-      ) : (
-        ''
       )}
     </MainLayout>
   );

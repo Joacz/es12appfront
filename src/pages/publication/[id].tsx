@@ -1,25 +1,11 @@
 import { NextPage } from 'next';
-import { MainLayout } from '../../../component/layout';
-import {
-  Button,
-  Container,
-  Grid,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { DetailsLayout, MainLayout } from '../../../component/layout';
+import { Grid, Link, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { useUrlify } from '../../../hooks';
 import { PublicationsContext } from '../../../context/publications';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { ArrowBackIos, Download } from '@mui/icons-material';
+import { ArrowBackIos, FileDownload } from '@mui/icons-material';
 
 const PublicationById: NextPage = () => {
   const router = useRouter();
@@ -36,10 +22,8 @@ const PublicationById: NextPage = () => {
   const urlify = useUrlify;
 
   return (
-    <MainLayout
-      headerTitle={publications[0]?.title}
+    <DetailsLayout
       title={publications[0]?.title}
-      includeHeader={false}
       description={publications[0]?.content}
     >
       <Grid
@@ -48,9 +32,9 @@ const PublicationById: NextPage = () => {
         alignItems={'flex-start'}
         flexDirection={'column'}
         display={'flex'}
-        sx={{ py: 10, height: '100vh', px: 5 }}
+        sx={{ height: '100vh', px: 5 }}
       >
-        <Grid container justifyContent={'center'} alignItems={'center'}>
+        <Grid container justifyContent={'center'} alignItems={'start'}>
           <Grid
             item
             xs={12}
@@ -59,7 +43,7 @@ const PublicationById: NextPage = () => {
             sx={{ gap: 5, display: 'flex', flexDirection: 'column' }}
           >
             <Grid item>
-              <Link href='/publication'>
+              <Link href='/'>
                 <ArrowBackIos
                   color='primary'
                   sx={{
@@ -92,6 +76,25 @@ const PublicationById: NextPage = () => {
                 __html: urlify(publications[0]?.content || ''),
               }}
             ></p>
+            {publications[0]?.images &&
+              publications[0]?.images?.filter(
+                (image) => !image.type.includes('image')
+              ).length > 0 && (
+                <>
+                  {publications?.map((p) =>
+                    p?.images?.map((image, key) => (
+                      <Link
+                        key={key}
+                        sx={{ fontSize: 20 }}
+                        href={`/api/image/download/${image.name}`}
+                      >
+                        <FileDownload fontSize='large' />
+                        {image.name.substring(16, image.name.length)}
+                      </Link>
+                    ))
+                  )}
+                </>
+              )}
             <Grid container xs={12}>
               {publications[0]?.images &&
                 publications[0]?.images?.filter((image) =>
@@ -120,65 +123,9 @@ const PublicationById: NextPage = () => {
                   })}
             </Grid>
           </Grid>
-
-          {/* Archivos */}
-
-          {publications[0]?.images &&
-            publications[0]?.images?.filter(
-              (image) => !image.type.includes('image')
-            ).length > 0 && (
-              <Container sx={{ width: '100%' }}>
-                <Typography variant='h2'>DESCARGAS</Typography>
-                <br />
-                <TableContainer component={Paper}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align='left'>Nombre</TableCell>
-                        <TableCell align='left'>Formato</TableCell>
-                        <TableCell align='center'>Acciones</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {publications?.map((p) =>
-                        p?.images?.map((image, key) => (
-                          <TableRow
-                            hover={true}
-                            key={key}
-                            sx={{
-                              '&:last-child td, &:last-child th': {
-                                border: 0,
-                              },
-                            }}
-                          >
-                            <TableCell>
-                              {image.name.substring(16, image.name.length)}
-                            </TableCell>
-                            <TableCell align='left'>
-                              {image.type.includes('pdf')
-                                ? 'pdf'
-                                : (image.type.includes('wordprocessingml') &&
-                                    'word') ||
-                                  'otro'}
-                            </TableCell>
-                            <TableCell align='center'>
-                              <IconButton
-                                href={`/api/image/download/${image.name}`}
-                              >
-                                <Download />
-                              </IconButton>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Container>
-            )}
         </Grid>
       </Grid>
-    </MainLayout>
+    </DetailsLayout>
   );
 };
 

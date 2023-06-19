@@ -1,38 +1,31 @@
-import { eventApi } from '../../../apis';
-import IEvent from '../../../interfaces/IEvents';
-import { MainLayout } from '../../../component/layout';
-import { Grid, IconButton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { DetailsLayout, MainLayout } from '../../../component/layout';
+import { Grid, Typography } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUrlify } from '../../../hooks';
 import { NextPage } from 'next';
-import { ArrowBackIos, ArrowLeftRounded } from '@mui/icons-material';
+import { ArrowBackIos } from '@mui/icons-material';
 import Link from 'next/link';
+import { EventsContext } from '../../../context/events';
 
 const EventById: NextPage = () => {
   const router = useRouter();
-  const [event, setEvent] = useState<IEvent>({} as IEvent);
+  const { events, findById } = useContext(EventsContext);
   const { id } = router.query;
 
   const urlify = useUrlify;
 
   useEffect(() => {
-    if (router.isReady)
-      eventApi.get<IEvent>(`/${id}`).then((res) => setEvent(res.data));
+    findById(id?.toString()!);
   }, [router.isReady]);
 
   return (
-    <MainLayout
-      headerTitle={event?.title}
-      includeHeader={false}
-      title={event?.title}
-      description={event?.content}
-    >
+    <DetailsLayout title={events[0]?.title} description={events[0]?.content}>
       <Grid
         container
         justifyContent={'center'}
         alignItems={'center'}
-        sx={{ py: 10 }}
+        sx={{ py: 10, height: '100vh' }}
         flexDirection={'column'}
         display={'flex'}
       >
@@ -45,7 +38,7 @@ const EventById: NextPage = () => {
             sx={{ gap: 5, display: 'flex', flexDirection: 'column' }}
           >
             <Grid item>
-              <Link href='/event'>
+              <Link href='/'>
                 <ArrowBackIos
                   color='primary'
                   sx={{
@@ -65,7 +58,7 @@ const EventById: NextPage = () => {
               }}
               textAlign={'left'}
             >
-              {event?.title}
+              {events[0]?.title}
             </Typography>
             <p
               style={{
@@ -74,13 +67,40 @@ const EventById: NextPage = () => {
                 fontSize: 20,
               }}
               dangerouslySetInnerHTML={{
-                __html: urlify(event?.content || ''),
+                __html: urlify(events[0]?.content || ''),
               }}
             ></p>
+            <Grid container xs={12}>
+              {events[0]?.images &&
+                events[0]?.images?.filter((image) =>
+                  image.type.includes('image')
+                ).length != 0 &&
+                events[0]?.images
+                  ?.filter((image) => image.type.includes('image'))
+                  .map((image) => {
+                    return (
+                      <Grid padding={1} item xs={12} md={6} lg={4}>
+                        <Link href={`/api/image/${image?.name}`}>
+                          <img
+                            src={`/api/image/${image?.name}`}
+                            alt=''
+                            style={{
+                              objectFit: 'cover',
+                              width: '100%',
+                              aspectRatio: 'square',
+                              height: 300,
+                              borderRadius: 10,
+                            }}
+                          />
+                        </Link>
+                      </Grid>
+                    );
+                  })}
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </MainLayout>
+    </DetailsLayout>
   );
 };
 

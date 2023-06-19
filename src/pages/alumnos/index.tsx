@@ -17,13 +17,16 @@ import {
 } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import Link from 'next/link';
+import { FilesContext } from '../../../context/files';
 
 export default function Index() {
   const { findAllBySection, publications } = useContext(PublicationsContext);
+  const { files, findFileBySection } = useContext(FilesContext);
 
   useEffect(() => {
+    findFileBySection('ALUMNOS');
     findAllBySection('ALUMNOS');
-  }, [publications]);
+  }, [publications, files]);
 
   return (
     <MainLayout
@@ -86,9 +89,7 @@ export default function Index() {
           </Link>
         </Grid>
       </Grid>
-      {publications.map((p) =>
-        p.images.filter((i) => !i.type.includes('image'))
-      ).length > 5 ? (
+      {files.length > 0 && (
         <Grid
           padding={3}
           container
@@ -104,41 +105,33 @@ export default function Index() {
                 <TableHead>
                   <TableRow>
                     <TableCell align='left'>Nombre</TableCell>
-                    <TableCell align='left'>Formato</TableCell>
-                    <TableCell align='center'>Acciones</TableCell>
+                    <TableCell align='center'>Descargar</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {publications?.map((p) =>
-                    p?.images?.map((image, key) => (
-                      <TableRow
-                        hover={true}
-                        key={key}
-                        sx={{
-                          '&:last-child td, &:last-child th': { border: 0 },
-                        }}
-                      >
-                        <TableCell>
-                          {image.name.substring(15, image.name.length)}
-                        </TableCell>
-                        <TableCell align='left'>{image.type}</TableCell>
-                        <TableCell align='center'>
-                          <IconButton
-                            href={`/api/image/download/${image.name}`}
-                          >
-                            <Download />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
+                  {files?.map((p, key) => (
+                    <TableRow
+                      hover={true}
+                      key={key}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell>
+                        {p.name.substring(16, p.name.length)}
+                      </TableCell>
+                      <TableCell align='center'>
+                        <IconButton href={`/api/image/download/${p.name}`}>
+                          <Download />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
           </Grid>
         </Grid>
-      ) : (
-        ''
       )}
     </MainLayout>
   );
