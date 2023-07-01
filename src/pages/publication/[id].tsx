@@ -2,14 +2,32 @@ import { NextPage } from 'next';
 import { DetailsLayout, MainLayout } from '../../../component/layout';
 import { Grid, Link, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { useUrlify } from '../../../hooks';
 import { PublicationsContext } from '../../../context/publications';
 import { useRouter } from 'next/router';
 import { ArrowBackIos, FileDownload } from '@mui/icons-material';
+import { SliderFullscreen } from '../../../component/ui/SliderFullscreen';
+import Publication from '../../../interfaces/Publication';
 
 const PublicationById: NextPage = () => {
   const router = useRouter();
   const { findById, publications } = useContext(PublicationsContext);
+  // Slider events
+  const [slider, setSlider] = useState<boolean>(false);
+  const [sliderIndex, setSliderIndex] = useState<number>(0);
+  const [publication, setPublication] = useState<Publication>({
+    id: '',
+    content: '',
+    date: '',
+    featured: false,
+    images: [],
+    section: '',
+    title: '',
+  });
+
+  const toggleSlider = (index: number) => {
+    setSlider(!slider);
+    setSliderIndex(index);
+  };
 
   useEffect(() => {
     const { id }: any = router.query;
@@ -17,14 +35,14 @@ const PublicationById: NextPage = () => {
     if (id) {
       findById(id);
     }
-  }, [publications]);
 
-  const urlify = useUrlify;
+    setPublication(publications[0]);
+  }, [publications, router.isReady]);
 
   return (
     <DetailsLayout
-      title={publications[0]?.title}
-      description={publications[0]?.content}
+      title={publication?.title}
+      description={publication?.content}
     >
       <Grid
         container
@@ -32,7 +50,7 @@ const PublicationById: NextPage = () => {
         alignItems={'flex-start'}
         flexDirection={'column'}
         display={'flex'}
-        sx={{ height: '100vh', px: 5 }}
+        sx={{ minHeight: '100vh', px: 5, py: 10 }}
       >
         <Grid container justifyContent={'center'} alignItems={'start'}>
           <Grid
@@ -54,7 +72,7 @@ const PublicationById: NextPage = () => {
                 />
               </Link>
             </Grid>
-            <p>{publications[0]?.date}</p>
+            <p>{publication?.date}</p>
             <Typography
               variant='h1'
               fontWeight={800}
@@ -64,48 +82,45 @@ const PublicationById: NextPage = () => {
               }}
               textAlign={'left'}
             >
-              {publications[0]?.title}
+              {publication?.title}
             </Typography>
             <p
-              style={{
-                fontSize: 20,
-                wordBreak: 'break-word',
-                textAlign: 'justify',
-              }}
+              style={{ fontSize: 20 }}
               dangerouslySetInnerHTML={{
-                __html: urlify(publications[0]?.content || ''),
+                __html: publication?.content || '',
               }}
             ></p>
-            {publications[0]?.images &&
-              publications[0]?.images?.filter(
+            {publication?.images &&
+              publication?.images?.filter(
                 (image) => !image.type.includes('image')
               ).length > 0 && (
                 <>
-                  {publications?.map((p) =>
-                    p?.images?.map((image, key) => (
-                      <Link
-                        key={key}
-                        sx={{ fontSize: 20 }}
-                        href={`/api/image/download/${image.name}`}
-                      >
-                        <FileDownload fontSize='large' />
-                        {image.name.substring(16, image.name.length)}
-                      </Link>
-                    ))
-                  )}
+                  {publication?.images?.map((image, key) => (
+                    <Link
+                      key={key}
+                      sx={{ fontSize: 20 }}
+                      href={`/api/image/download/${image.name}`}
+                    >
+                      <FileDownload fontSize='large' />
+                      {image.name.substring(16, image.name.length)}
+                    </Link>
+                  ))}
                 </>
               )}
             <Grid container xs={12}>
-              {publications[0]?.images &&
-                publications[0]?.images?.filter((image) =>
+              {publication?.images &&
+                publication?.images?.filter((image) =>
                   image.type.includes('image')
                 ).length != 0 &&
-                publications[0]?.images
+                publication?.images
                   ?.filter((image) => image.type.includes('image'))
-                  .map((image) => {
+                  .map((image, index) => {
                     return (
                       <Grid padding={1} item xs={12} md={6} lg={4}>
-                        <Link href={`/api/image/${image?.name}`}>
+                        <Link
+                          onClick={() => toggleSlider(index)}
+                          sx={{ cursor: 'pointer' }}
+                        >
                           <img
                             src={`/api/image/${image?.name}`}
                             alt=''
@@ -125,6 +140,13 @@ const PublicationById: NextPage = () => {
           </Grid>
         </Grid>
       </Grid>
+      {slider && (
+        <SliderFullscreen
+          setClose={setSlider}
+          images={publication?.images}
+          initialIndex={sliderIndex}
+        />
+      )}
     </DetailsLayout>
   );
 };

@@ -26,7 +26,7 @@ export const EventsProvider: FunctionComponent<EventsProps> = ({
   };
 
   const findById = async (id: string) => {
-    const events = await eventApi.get<IEvent>(`/{${id}}`);
+    const events = await eventApi.get<IEvent>(`/${id}`);
 
     dispatch({ type: 'Find By Id', payload: events.data });
   };

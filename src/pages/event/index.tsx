@@ -1,11 +1,15 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { MainLayout } from '../../../component/layout';
 import { Grid, Typography } from '@mui/material';
-import { EventCard, EventCardContainer } from '../../../component/ui';
+import { EventCard } from '../../../component/ui';
 import { EventsContext } from '../../../context/events';
 
 const Event: FC = () => {
-  const { events } = useContext(EventsContext);
+  const { events, findAll } = useContext(EventsContext);
+
+  useEffect(() => {
+    findAll();
+  }, [events]);
 
   return (
     <MainLayout
@@ -15,14 +19,14 @@ const Event: FC = () => {
         'Lista de publicaciones de la escuela N12 Provincia del Neuquén. Encuentra las noticias más relevantes de la escuela.'
       }
     >
-      <Typography variant={'h2'}>Eventos más recientes</Typography>
+      <Typography variant={'h2'}>Actos y eventos más recientes</Typography>
       <Grid
         rowGap={8}
         container
         p={5}
-        width={'80%'}
+        width={'100%'}
         justifyContent={'center'}
-        alignItems={'center'}
+        alignItems={'start'}
       >
         {events.map((event) => (
           <EventCard

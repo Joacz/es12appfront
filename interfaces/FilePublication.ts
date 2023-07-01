@@ -5,4 +5,5 @@ export default interface FilePublication {
   size: number;
   section: string;
   fixed: boolean;
+  mainFile: boolean;
 }

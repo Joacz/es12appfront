@@ -2,8 +2,9 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { FC } from 'react';
 import { EventCard } from '.';
+import IEvent from '../../../interfaces/IEvents';
 
-export const EventCardContainer: FC<{ events: any }> = ({ events }) => {
+export const EventCardContainer: FC<{ events: IEvent[] }> = ({ events }) => {
   return (
     <>
       {events.length >= 1 ? (
@@ -24,6 +25,7 @@ export const EventCardContainer: FC<{ events: any }> = ({ events }) => {
                     subtitle={e.subtitle}
                     content={e.content}
                     portrait={e.images[0]?.name || 'es12.png'}
+                    id={e.id}
                   />
                 )}
               </>

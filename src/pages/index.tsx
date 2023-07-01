@@ -1,27 +1,9 @@
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  Typography,
-} from '@mui/material';
-import {
-  EventCardContainer,
-  Divisor,
-  Location,
-  PublicationList,
-} from '../../component/ui';
+import { Location, PublicationList } from '../../component/ui';
 import { MainLayout } from '../../component/layout';
-import { FileDisplay } from '../../component/ui/FileDisplay';
-import { eventApi, publicationApi } from '../../apis';
 import IEvent from '../../interfaces/IEvents';
 import Publication from '../../interfaces/Publication';
-import { InferGetServerSidePropsType, NextPage } from 'next';
 import { PublicationsContext } from '../../context/publications';
-import { EventsContext } from '../../context/events';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 type Props = {
   events: IEvent[] | null | undefined;

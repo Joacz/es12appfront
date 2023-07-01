@@ -8,6 +8,6 @@ export default interface Publication {
   date: string,
   featured: boolean;
   images: Image[];
-
+  section: string,
 
 }

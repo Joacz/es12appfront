@@ -10,13 +10,13 @@ export const Slider: FC<SliderProps> = ({ images }) => {
   const [index, setIndex] = useState(0);
 
   const addIndex = () => {
-    if (images.indexOf(images[index]) !== images.length - 1) {
+    if (images?.indexOf(images[index]) !== images?.length - 1) {
       setIndex(index + 1);
     }
   };
 
   const sustractIndex = () => {
-    if (images.indexOf(images[index]) !== 0) setIndex(index - 1);
+    if (images?.indexOf(images[index]) !== 0) setIndex(index - 1);
   };
 
   return (
@@ -28,7 +28,7 @@ export const Slider: FC<SliderProps> = ({ images }) => {
         position: 'relative',
       }}
     >
-      {images.length >= 1 && images.indexOf(images[index]) !== 0 && (
+      {images?.length >= 1 && images?.indexOf(images[index]) !== 0 && (
         <ArrowBackIos
           onClick={() => sustractIndex()}
           style={{
@@ -60,8 +60,8 @@ export const Slider: FC<SliderProps> = ({ images }) => {
           objectFit: 'contain',
         }}
       />
-      {images.length >= 1 &&
-        images.indexOf(images[index]) !== images.length - 1 && (
+      {images?.length >= 1 &&
+        images?.indexOf(images[index]) !== images?.length - 1 && (
           <ArrowForwardIos
             onClick={() => addIndex()}
             style={{

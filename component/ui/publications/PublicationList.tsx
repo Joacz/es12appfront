@@ -7,7 +7,6 @@ import {
   Button,
 } from '@mui/material';
 import { FC } from 'react';
-import { useUrlify } from '../../../hooks/';
 import Publication from '../../../interfaces/Publication';
 import { Slider } from '../';
 
@@ -20,8 +19,6 @@ export const PublicationList: FC<PublicationsProps> = ({
   publications,
   hasTitle,
 }) => {
-  const urlify = useUrlify;
-
   return (
     <Grid
       container
@@ -60,14 +57,13 @@ export const PublicationList: FC<PublicationsProps> = ({
                   </Typography>
                   <p
                     style={{ fontSize: 20 }}
-                    className='textPublication'
                     dangerouslySetInnerHTML={{
-                      __html: urlify(
+                      __html:
                         p.content?.length > 200
                           ? p.content.substring(0, 500) + '...'
-                          : p.content
-                      ),
+                          : p.content,
                     }}
+                    className='textPublication'
                   ></p>
                   {p.images &&
                     p.images.filter((i) => i.type.includes('image')).length >=
@@ -85,6 +81,20 @@ export const PublicationList: FC<PublicationsProps> = ({
                   >
                     Ver más
                   </Button>
+                  <Typography
+                    variant={'body1'}
+                    fontSize={12}
+                    textAlign={'left'}
+                  >
+                    {p.images.filter((i) => !i.type.includes('image')).length !=
+                    0
+                      ? p.images.filter((i) => !i.type.includes('image'))
+                          .length === 1
+                        ? '1 Archivo adjunto'
+                        : p.images.filter((i) => !i.type.includes('image'))
+                            .length + ' Archivos adjuntos'
+                      : ''}
+                  </Typography>
                 </div>
               </ListItem>
             </List>

@@ -1,35 +1,53 @@
 import { DetailsLayout, MainLayout } from '../../../component/layout';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Link, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useUrlify } from '../../../hooks';
 import { NextPage } from 'next';
 import { ArrowBackIos } from '@mui/icons-material';
-import Link from 'next/link';
 import { EventsContext } from '../../../context/events';
+import { SliderFullscreen } from '../../../component/ui/SliderFullscreen';
+import IEvent from '../../../interfaces/IEvents';
 
 const EventById: NextPage = () => {
   const router = useRouter();
   const { events, findById } = useContext(EventsContext);
-  const { id } = router.query;
-
-  const urlify = useUrlify;
+  // Slider events
+  const [slider, setSlider] = useState<boolean>(false);
+  const [sliderIndex, setSliderIndex] = useState<number>(0);
+  const [event, setEvent] = useState<IEvent>({
+    content: '',
+    date: '',
+    id: '',
+    images: [],
+    subtitle: '',
+    title: '',
+  });
+  const toggleSlider = (index: number) => {
+    setSlider(!slider);
+    setSliderIndex(index);
+  };
 
   useEffect(() => {
-    findById(id?.toString()!);
-  }, [router.isReady]);
+    const { id }: any = router.query;
+
+    if (id) {
+      findById(id);
+    }
+
+    setEvent(events.filter((e) => e.id === id)[0]);
+  }, [events, router.isReady]);
 
   return (
-    <DetailsLayout title={events[0]?.title} description={events[0]?.content}>
+    <DetailsLayout title={event?.title} description={event?.content}>
       <Grid
         container
-        justifyContent={'center'}
-        alignItems={'center'}
-        sx={{ py: 10, height: '100vh' }}
+        justifyContent={'start'}
+        alignItems={'start'}
+        sx={{ py: 10, minHeight: '100vh', px: 5, transition: 'all .3s ease' }}
         flexDirection={'column'}
         display={'flex'}
       >
-        <Grid container justifyContent={'center'} alignItems={'center'}>
+        <Grid container justifyContent={'center'} alignItems={'start'}>
           <Grid
             item
             xs={12}
@@ -58,29 +76,27 @@ const EventById: NextPage = () => {
               }}
               textAlign={'left'}
             >
-              {events[0]?.title}
+              {event?.title}
             </Typography>
             <p
-              style={{
-                wordBreak: 'break-word',
-                textAlign: 'justify',
-                fontSize: 20,
-              }}
+              style={{ fontSize: 20 }}
               dangerouslySetInnerHTML={{
-                __html: urlify(events[0]?.content || ''),
+                __html: event?.content || '',
               }}
             ></p>
             <Grid container xs={12}>
-              {events[0]?.images &&
-                events[0]?.images?.filter((image) =>
-                  image.type.includes('image')
-                ).length != 0 &&
-                events[0]?.images
+              {event?.images &&
+                event?.images?.filter((image) => image.type.includes('image'))
+                  .length != 0 &&
+                event?.images
                   ?.filter((image) => image.type.includes('image'))
-                  .map((image) => {
+                  .map((image, index) => {
                     return (
                       <Grid padding={1} item xs={12} md={6} lg={4}>
-                        <Link href={`/api/image/${image?.name}`}>
+                        <Link
+                          onClick={() => toggleSlider(index)}
+                          sx={{ cursor: 'pointer' }}
+                        >
                           <img
                             src={`/api/image/${image?.name}`}
                             alt=''
@@ -100,6 +116,13 @@ const EventById: NextPage = () => {
           </Grid>
         </Grid>
       </Grid>
+      {slider && (
+        <SliderFullscreen
+          setClose={setSlider}
+          images={event?.images}
+          initialIndex={sliderIndex}
+        />
+      )}
     </DetailsLayout>
   );
 };

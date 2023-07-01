@@ -17,10 +17,17 @@ export const EventCard: FC<EventCardProps> = ({
   content,
   portrait,
 }) => {
-  const [showString, setShowString] = useState(false);
-
   return (
-    <Grid item md={6} lg={4} gap={1} padding={2}>
+    <Grid
+      item
+      sm={12}
+      md={6}
+      lg={4}
+      gap={1}
+      padding={2}
+      display={'1'}
+      height={'100%'}
+    >
       <div
         style={{
           border: '1px solid #aaa',
@@ -31,6 +38,7 @@ export const EventCard: FC<EventCardProps> = ({
         <img
           style={{
             height: 280,
+            width: '100%',
             borderRadius: 10,
             objectFit: 'cover',
           }}
@@ -43,27 +51,9 @@ export const EventCard: FC<EventCardProps> = ({
           {title}
         </Typography>
         <div className='divisorCard' />
-        <Typography variant='subtitle1' fontSize={25} textAlign={'left'}>
+        <Typography variant='body2' fontSize={20} textAlign={'left'}>
           {subtitle}
         </Typography>
-        {content.length >= 400 && !showString ? (
-          <div className='flex flex-col gap-5 select-none'>
-            <Typography
-              variant='body1'
-              fontSize={17}
-              textAlign={'left'}
-              sx={{ wordBreak: 'break-word' }}
-            >
-              {content.substring(0, 400)}...
-            </Typography>
-          </div>
-        ) : (
-          <div className='flex flex-col gap-5 select-none'>
-            <Typography variant='body1' fontSize={17} textAlign={'left'}>
-              {content}
-            </Typography>
-          </div>
-        )}
         <Button href={`/event/${id}`} sx={{ mt: 2 }} variant='outlined'>
           Ver más
         </Button>
